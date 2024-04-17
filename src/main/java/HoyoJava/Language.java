@@ -1,5 +1,10 @@
 package HoyoJava;
 
+/**
+ * This file is taken originally from:
+ * https://github.com/wuliao97/Mihomo.API-withJava
+ */
+
 public enum Language {
     cht,
     cn,

@@ -1,5 +1,10 @@
 package HoyoJava;
 
+/**
+ * This file is taken originally from:
+ * https://github.com/wuliao97/Mihomo.API-withJava
+ */
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -12,7 +17,6 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class MihomoAPI {
     private final Language Language;
-    //private List<String> params = new ArrayList<String>();
     private final String BASE_URL = "https://api.mihomo.me/sr_info_parsed";
     private final String ASSET_URL = "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master";
 
