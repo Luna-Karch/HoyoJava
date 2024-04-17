@@ -1,4 +1,4 @@
-package HoyoJava;
+package HoyoJava.API;
 
 /**
  * This file is taken originally from:
