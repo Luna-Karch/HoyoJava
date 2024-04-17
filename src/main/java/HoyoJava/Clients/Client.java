@@ -11,7 +11,16 @@ import com.fasterxml.jackson.databind.JsonNode;
  */
 public class Client {
     private final String UID;
+    private static final String ASSET_URL = "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master";
     private JsonNode SRC;
+
+    /**
+     * @param Original String the original source, ex: "icon/relic/306.png"
+     * @return The actual asset url string
+     */
+    private static String getActualURL(String Original) {
+        return ASSET_URL + "/" + Original;
+    }
 
     public Client(String UID) {
         this.UID = UID;

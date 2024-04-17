@@ -1,12 +1,11 @@
 package HoyoJava.Clients;
 
 import java.util.ArrayList;
-
 import HoyoJava.API.Language;
 import HoyoJava.API.MihomoAPI;
 
 public class ClientManager {
-    public static ArrayList<Client> clients = new ArrayList<>();
+    private static ArrayList<Client> clients = new ArrayList<>();
     public static final MihomoAPI API = new MihomoAPI(Language.en);
 
     public static void add(Client client) {
