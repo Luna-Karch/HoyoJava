@@ -1,8 +1,6 @@
 package HoyoJava;
 
-import HoyoJava.API.Language;
-import HoyoJava.API.MihomoAPI;
-import com.fasterxml.jackson.databind.JsonNode;
+import HoyoJava.Clients.Client;
 
 /**
  * The main App class, being used for testing ATM
@@ -11,13 +9,7 @@ import com.fasterxml.jackson.databind.JsonNode;
  */
 public class App {
     public static void main(String[] args) throws Exception {
-        MihomoAPI api = new MihomoAPI(Language.en);
-
-        Client client = new Client(api, "613792348");
-        JsonNode src = client.connect();
-
-        if (src != null) {
-            System.out.println(src.get("player"));
-        }
+        Client client = new Client("613792348");
+        System.out.println(client.getCharacters());
     }
 }
