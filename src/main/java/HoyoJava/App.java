@@ -10,6 +10,6 @@ import HoyoJava.Clients.Client;
 public class App {
     public static void main(String[] args) throws Exception {
         Client client = new Client("613792348");
-        System.out.println(client.getCharacters());
+        System.out.println(client.getPlayer());
     }
 }

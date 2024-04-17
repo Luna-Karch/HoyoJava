@@ -18,7 +18,7 @@ public class Client {
      * @param Original String the original source, ex: "icon/relic/306.png"
      * @return The actual asset url string
      */
-    private static String getActualURL(String Original) {
+    public static String getActualURL(String Original) {
         return ASSET_URL + "/" + Original;
     }
 
