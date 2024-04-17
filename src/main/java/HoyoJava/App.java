@@ -1,6 +1,7 @@
 package HoyoJava;
 
 import HoyoJava.Clients.Client;
+import HoyoJava.HSR.HSRProfile;
 
 /**
  * The main App class, being used for testing ATM
@@ -10,6 +11,7 @@ import HoyoJava.Clients.Client;
 public class App {
     public static void main(String[] args) throws Exception {
         Client client = new Client("613792348");
-        System.out.println(client.getPlayer());
+        HSRProfile profile = client.getHSRProfile();
+        System.out.println(profile);
     }
 }

@@ -2,6 +2,8 @@ package HoyoJava.Clients;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import HoyoJava.HSR.HSRProfile;
+
 /**
  * Represents a Client, a user who will attempt to connect to the api.
  * The goal of this class is to make Interacting with the API a little easier
@@ -59,6 +61,14 @@ public class Client {
 
     public JsonNode getCharacters() {
         return this.SRC.get("characters");
+    }
+
+    public HSRProfile getHSRProfile() {
+        if (SRC != null) {
+            return new HSRProfile(SRC);
+        }
+
+        return null;
     }
 
     @Override

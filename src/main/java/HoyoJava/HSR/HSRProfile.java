@@ -65,14 +65,16 @@ public class HSRProfile {
     private final SpaceInfo spaceInfo;
     
     public HSRProfile(JsonNode data) {
-        this.uid = data.get("uid").asText();
-        this.nickname = data.get("nickname").asText();
-        this.level = data.get("level").asInt();
-        this.worldLevel = data.get("world_level").asInt();
-        this.friendCount = data.get("friend_count").asInt();
-        this.avatar = new Avatar(data);
-		this.signature = data.get("signature").asText();
-        this.spaceInfo = new SpaceInfo(data);
+        JsonNode player = data.get("player");
+
+        this.uid = player.get("uid").asText();
+        this.nickname = player.get("nickname").asText();
+        this.level = player.get("level").asInt();
+        this.worldLevel = player.get("world_level").asInt();
+        this.friendCount = player.get("friend_count").asInt();
+        this.avatar = new Avatar(player);
+		this.signature = player.get("signature").asText();
+        this.spaceInfo = new SpaceInfo(player);
     }
 
     public String getUID() { return this.uid; }
@@ -83,4 +85,10 @@ public class HSRProfile {
     public String getSignature() { return this.signature; }
     public Avatar getAvatar() { return this.avatar; }
     public SpaceInfo getSpaceInfo() { return this.spaceInfo; }
+
+    @Override
+    public String toString() {
+        return String.format("Profile\n\tUID\t%s\n\tnickname: %s\n\tsignature: %s\n\tlevel: %d\n\tworldLevel: %d\n\tfriendCount: %d\n\tavatar: %s\n\tspaceInfo: ...",
+        this.uid, this.nickname, this.signature, this.level, this.worldLevel, this.friendCount, this.avatar.getUrl());
+    }
 }
