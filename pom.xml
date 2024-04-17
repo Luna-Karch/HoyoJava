@@ -12,8 +12,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 
   <repositories>
@@ -23,18 +23,17 @@
       </repository>
   </repositories>
 
-  <dependency>
-    <groupId>com.github.zvyap</groupId>
-    <artifactId>Hoyoverse-API</artifactId>
-    <version>[VERSION]</version>
-  </dependency>
-
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.github.zvyap</groupId>
+      <artifactId>Hoyoverse-API</artifactId>
+      <version>0.4</version>
     </dependency>
   </dependencies>
 
