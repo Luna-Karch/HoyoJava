@@ -1,9 +1,8 @@
 package HoyoJava;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
 import HoyoJava.API.Language;
 import HoyoJava.API.MihomoAPI;
+import com.fasterxml.jackson.databind.JsonNode;
 
 public class App {
     public static void main(String[] args) throws Exception {
