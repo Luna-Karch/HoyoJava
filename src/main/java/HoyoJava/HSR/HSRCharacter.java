@@ -1,5 +1,6 @@
 package HoyoJava.HSR;
 
+import java.util.ArrayList;
 import HoyoJava.Clients.Client;
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -46,7 +47,7 @@ public class HSRCharacter {
         public String getIconUrl() { return this.iconUrl; }
     }
 
-    public class Skill {
+    public class BaseSkill {
         private final String ID;
         private final String name;
         private final int level;
@@ -60,7 +61,7 @@ public class HSRCharacter {
         private final String description;
         private final String iconUrl;
 
-        public Skill(String ID, String name, int level, int maxLevel,
+        public BaseSkill(String ID, String name, int level, int maxLevel,
         Element element, String type, String typeText, String effect,
         String effectText, String simpleDescription, String description,
         String iconUrl) {
@@ -92,6 +93,42 @@ public class HSRCharacter {
         public String getIconUrl() { return this.iconUrl; }
     }
 
+    public class TreeSkill {
+        private final String ID;
+        private final int level;
+        private final String anchor;
+        private final int maxLevel;
+        private final String iconUrl;
+        private final String parent;
+
+        public TreeSkill(String ID, int level, String anchor, 
+        int maxLevel, String iconUrl) {
+            this.ID = ID;
+            this.level = level;
+            this.anchor = anchor;
+            this.maxLevel = maxLevel;
+            this.iconUrl = Client.getActualURL(iconUrl);
+            this.parent = null;
+        }
+
+        public TreeSkill(String ID, int level, String anchor, 
+        int maxLevel, String iconUrl, String parent) {
+            this.ID = ID;
+            this.level = level;
+            this.anchor = anchor;
+            this.maxLevel = maxLevel;
+            this.iconUrl = Client.getActualURL(iconUrl);
+            this.parent = parent;
+        } // Alternate constructor for when a parent is present
+
+        public String getID() { return this.ID; }
+        public int getLevel() { return this.level; }
+        public String getAnchor() { return this.anchor; }
+        public int getMaxLevel() { return this.maxLevel; }
+        public String getIconUrl() { return this.iconUrl; }
+        public String getParent() { return this.parent; }
+    }
+
     private final String ID;
     private final String name;
     private final int rarity;
@@ -104,6 +141,7 @@ public class HSRCharacter {
     private String[] rankIcons;
     private final Path path;
     private final Element element;
+    private final ArrayList<BaseSkill> skills;
 
     public HSRCharacter(JsonNode characterNode) {
         throw new UnsupportedOperationException(); // TODO
