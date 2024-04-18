@@ -17,12 +17,14 @@ public class App {
         JsonNode characters = client.getCharacters();
 
         for (final JsonNode characterNode: characters) {
-            Iterator<Map.Entry<String, JsonNode>> fields = characterNode.fields();
+            // Iterator<Map.Entry<String, JsonNode>> fields = characterNode.fields();
 
-            while (fields.hasNext()) {
-                Map.Entry<String, JsonNode> field = fields.next();
-                System.out.println(field.getKey() + ": " + field.getValue());
-            }
+            // while (fields.hasNext()) {
+            //     Map.Entry<String, JsonNode> field = fields.next();
+            //     System.out.println(field.getKey() + ": " + field.getValue());
+            // }
+
+            System.out.println(characterNode);
             break;
         }
     }

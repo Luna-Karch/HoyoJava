@@ -3,9 +3,10 @@ package HoyoJava.HSR;
 import java.util.ArrayList;
 import HoyoJava.Clients.Client;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.NullNode;
 
 public class HSRCharacter {
-    public class Path {
+    public static class Path {
         private final String ID;
         private final String name;
         private final String iconUrl;
@@ -23,7 +24,7 @@ public class HSRCharacter {
         public String getIconUrl() { return this.iconUrl; }
     }
 
-    public class Element {
+    public static class Element {
         private final String ID;
         private final String name;
         private final String color;
@@ -51,7 +52,7 @@ public class HSRCharacter {
         public String getIconUrl() { return this.iconUrl; }
     }
 
-    public class BaseSkill {
+    public static class BaseSkill {
         private final String ID;
         private final String name;
         private final int level;
@@ -81,6 +82,31 @@ public class HSRCharacter {
             this.simpleDescription = simpleDescription;
             this.description = description;
             this.iconUrl = Client.getActualURL(iconUrl);
+        }
+
+        public static BaseSkill fromSkillData(JsonNode skillData) {
+            String ID = skillData.get("id").asText();
+            String name = skillData.get("name").asText();
+            int level = skillData.get("level").asInt();
+            int maxLevel = skillData.get("max_level").asInt();
+            Element element;
+
+            if (skillData.get("element") instanceof NullNode) {
+                element = new Element();
+            } else {
+                element = new Element(skillData);
+            } // If the element is null, set it's fields to be null
+
+            String type = skillData.get("type").asText();
+            String typeText = skillData.get("type_text").asText();
+            String effect = skillData.get("effect").asText();
+            String effectText = skillData.get("effect_text").asText();
+            String simpleDescription = skillData.get("simple_desc").asText();
+            String description = skillData.get("desc").asText();
+            String iconUrl = Client.getActualURL(skillData.get("icon").asText());
+
+            return new BaseSkill(ID, name, level, maxLevel, 
+            element, type, typeText, effect, effectText, simpleDescription, description, iconUrl);
         }
 
         public String getID() { return this.ID; }
@@ -142,10 +168,10 @@ public class HSRCharacter {
     private String iconUrl;
     private String previewUrl;
     private String portraitUrl;
-    private String[] rankIcons;
+    private ArrayList<String> rankIcons = new ArrayList<>();
     private final Path path;
     private final Element element;
-    private final ArrayList<BaseSkill> skills;
+    private final ArrayList<BaseSkill> skills = new ArrayList<>();
 
     public HSRCharacter(JsonNode characterNode) {
         this.ID = characterNode.get("id").asText();
@@ -155,8 +181,15 @@ public class HSRCharacter {
         this.promotion = characterNode.get("level").asInt();
         this.iconUrl = Client.getActualURL(characterNode.get("icon").asText());
         this.path = new Path(characterNode);
-        // TODO: Implement Rank Icons
+        
+        for (final JsonNode rankIcon: characterNode.get("rank_icons")) {
+            this.rankIcons.add(rankIcon.asText());
+        }
         this.element = new Element(characterNode);
+
+        for (final JsonNode skillData: characterNode.get("skills")) {
+            this.skills.add(BaseSkill.fromSkillData(skillData));
+        }
 
         throw new UnsupportedOperationException(); // TODO
     }
