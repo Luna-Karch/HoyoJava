@@ -1,7 +1,9 @@
 package HoyoJava;
 
+import java.util.Map;
+import java.util.Iterator;
 import HoyoJava.Clients.Client;
-import HoyoJava.HSR.HSRProfile;
+import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * The main App class, being used for testing ATM
@@ -11,10 +13,17 @@ import HoyoJava.HSR.HSRProfile;
 public class App {
     public static void main(String[] args) throws Exception {
         Client client = new Client("613792348");
-        HSRProfile profile = client.getHSRProfile();
-        System.out.println(profile);
 
+        JsonNode characters = client.getCharacters();
 
-        //System.out.println(client.getCharacters());
+        for (final JsonNode characterNode: characters) {
+            Iterator<Map.Entry<String, JsonNode>> fields = characterNode.fields();
+
+            while (fields.hasNext()) {
+                Map.Entry<String, JsonNode> field = fields.next();
+                System.out.println(field.getKey() + ": " + field.getValue());
+            }
+            break;
+        }
     }
 }

@@ -1,8 +1,7 @@
 package HoyoJava.Clients;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
 import HoyoJava.HSR.HSRProfile;
+import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * Represents a Client, a user who will attempt to connect to the api.
