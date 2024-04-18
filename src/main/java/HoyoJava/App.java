@@ -13,5 +13,8 @@ public class App {
         Client client = new Client("613792348");
         HSRProfile profile = client.getHSRProfile();
         System.out.println(profile);
+
+
+        //System.out.println(client.getCharacters());
     }
 }

@@ -53,6 +53,21 @@ public class HSRProfile {
 
         public MemoryData getMemoryData() { return this.memoryData; }
 
+        private String memoryString() {
+            return "\t\tmemoryData:\n\t\t\tLevel: " + this.memoryData.level()
+            + "\n\t\t\tChaos ID: " + this.memoryData.chaosID() 
+            + "\n\t\t\tChaos Level: " + this.memoryData.chaosLevel;
+        }
+
+        @Override
+        public String toString() {
+            return "\n\t\tUniverse Level: " + this.getUniverseLevel()
+            + "\n\t\tLightcone Count: " + this.getLightConeCount() +
+            "\n\t\tAvatar Count: " + this.getAvatarCount() +
+            "\n\t\tAchievement Count: " + this.getAchievementCount() + "\n" + 
+            this.memoryString();
+        }
+
     }
 
     private final String uid;
@@ -88,7 +103,7 @@ public class HSRProfile {
 
     @Override
     public String toString() {
-        return String.format("Profile\n\tUID\t%s\n\tnickname: %s\n\tsignature: %s\n\tlevel: %d\n\tworldLevel: %d\n\tfriendCount: %d\n\tavatar: %s\n\tspaceInfo: ...",
-        this.uid, this.nickname, this.signature, this.level, this.worldLevel, this.friendCount, this.avatar.getUrl());
+        return String.format("Profile\n\tUID\t%s\n\tnickname: %s\n\tsignature: %s\n\tlevel: %d\n\tworldLevel: %d\n\tfriendCount: %d\n\tavatar: %s\n\tspaceInfo: %s\n",
+        this.uid, this.nickname, this.signature, this.level, this.worldLevel, this.friendCount, this.avatar.getUrl(), this.getSpaceInfo().toString());
     }
 }
