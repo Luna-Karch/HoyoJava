@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
 
 public class HSRCharacter {
-    public static class Path {
+    public class Path {
         private final String ID;
         private final String name;
         private final String iconUrl;
@@ -24,7 +24,7 @@ public class HSRCharacter {
         public String getIconUrl() { return this.iconUrl; }
     }
 
-    public static class Element {
+    public class Element {
         private final String ID;
         private final String name;
         private final String color;
@@ -52,7 +52,7 @@ public class HSRCharacter {
         public String getIconUrl() { return this.iconUrl; }
     }
 
-    public static class BaseSkill {
+    public class BaseSkill {
         private final String ID;
         private final String name;
         private final int level;
@@ -66,47 +66,19 @@ public class HSRCharacter {
         private final String description;
         private final String iconUrl;
 
-        public BaseSkill(String ID, String name, int level, int maxLevel,
-        Element element, String type, String typeText, String effect,
-        String effectText, String simpleDescription, String description,
-        String iconUrl) {
-            this.ID = ID;
-            this.name = name;
-            this.level = level;
-            this.maxLevel = maxLevel;
-            this.element = element;
-            this.type = type;
-            this.typeText = typeText;
-            this.effect = effect;
-            this.effectText = effectText;
-            this.simpleDescription = simpleDescription;
-            this.description = description;
-            this.iconUrl = Client.getActualURL(iconUrl);
-        }
-
-        public static BaseSkill fromSkillData(JsonNode skillData) {
-            String ID = skillData.get("id").asText();
-            String name = skillData.get("name").asText();
-            int level = skillData.get("level").asInt();
-            int maxLevel = skillData.get("max_level").asInt();
-            Element element;
-
-            if (skillData.get("element") instanceof NullNode) {
-                element = new Element();
-            } else {
-                element = new Element(skillData);
-            } // If the element is null, set it's fields to be null
-
-            String type = skillData.get("type").asText();
-            String typeText = skillData.get("type_text").asText();
-            String effect = skillData.get("effect").asText();
-            String effectText = skillData.get("effect_text").asText();
-            String simpleDescription = skillData.get("simple_desc").asText();
-            String description = skillData.get("desc").asText();
-            String iconUrl = Client.getActualURL(skillData.get("icon").asText());
-
-            return new BaseSkill(ID, name, level, maxLevel, 
-            element, type, typeText, effect, effectText, simpleDescription, description, iconUrl);
+        public BaseSkill(JsonNode skillData) {
+            this.ID = skillData.get("id").asText();
+            this.name = skillData.get("name").asText();
+            this.level = skillData.get("level").asInt();
+            this.maxLevel = skillData.get("max_level").asInt();
+            this.element = (skillData.get("element") instanceof NullNode) ? (new Element()) : (new Element(skillData));
+            this.type = skillData.get("type").asText();
+            this.typeText = skillData.get("type_text").asText();
+            this.effect = skillData.get("effect").asText();
+            this.effectText = skillData.get("effect_text").asText();
+            this.simpleDescription = skillData.get("simple_desc").asText();
+            this.description = skillData.get("desc").asText();
+            this.iconUrl = Client.getActualURL(skillData.get("icon").asText());
         }
 
         public String getID() { return this.ID; }
@@ -159,6 +131,10 @@ public class HSRCharacter {
         public String getParent() { return this.parent; }
     }
 
+    public class SkillTree {
+        // TODO: Implement a skill tree system
+    }
+
     private final String ID;
     private final String name;
     private final int rarity;
@@ -188,9 +164,23 @@ public class HSRCharacter {
         this.element = new Element(characterNode);
 
         for (final JsonNode skillData: characterNode.get("skills")) {
-            this.skills.add(BaseSkill.fromSkillData(skillData));
+            this.skills.add(new BaseSkill(skillData));
         }
 
         throw new UnsupportedOperationException(); // TODO
     }
+
+    public String getID() { return this.ID; }
+    public String getName() { return this.name; }
+    public int getRarity() { return this.rarity; }
+    public int getLevel() { return this.level; }
+    public int getRank() { return this.rank; }
+    public int getPromotion() { return this.promotion; }
+    public String getIconUrl() { return this.iconUrl; }
+    public String getPreviewUrl() { return this.previewUrl; }
+    public String getPortraitUrl() { return this.portraitUrl; }
+    public ArrayList<String> getRankIcons() { return this.rankIcons; }
+    public Path getPath() { return this.path; }
+    public Element getElement() { return this.element; }
+    public ArrayList<BaseSkill> getSkills() { return this.skills; }
 }
