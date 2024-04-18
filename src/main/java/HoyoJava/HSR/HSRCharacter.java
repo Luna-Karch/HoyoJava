@@ -10,10 +10,12 @@ public class HSRCharacter {
         private final String name;
         private final String iconUrl;
         
-        public Path(String ID, String name, String iconUrl) {
-            this.ID = ID;
-            this.name = name;
-            this.iconUrl = Client.getActualURL(iconUrl);
+        public Path(JsonNode characterNode) {
+            JsonNode pathNode = characterNode.get("path");
+
+            this.ID = pathNode.get("id").asText();
+            this.name = pathNode.get("name").asText();
+            this.iconUrl = Client.getActualURL(pathNode.get("icon").asText());
         }
 
         public String getID() { return this.ID; }
@@ -27,11 +29,13 @@ public class HSRCharacter {
         private final String color;
         private final String iconUrl;
 
-        public Element(String ID, String name, String color, String iconUrl) {
-            this.ID = ID;
-            this.name = name;
-            this.color = color;
-            this.iconUrl = Client.getActualURL(iconUrl);
+        public Element(JsonNode characterNode) {
+            JsonNode elementNode = characterNode.get("element");
+
+            this.ID = elementNode.get("id").asText();
+            this.name = elementNode.get("name").asText();
+            this.color = elementNode.get("color").asText();
+            this.iconUrl = Client.getActualURL(elementNode.get("icon").asText());
         }
 
         public Element() {
@@ -39,7 +43,7 @@ public class HSRCharacter {
             this.name = null;
             this.color = null;
             this.iconUrl = null;
-        }
+        } // Set everything to null when nothing is provided
 
         public String getID() { return this.ID; }
         public String getName() { return this.name; }
@@ -144,6 +148,16 @@ public class HSRCharacter {
     private final ArrayList<BaseSkill> skills;
 
     public HSRCharacter(JsonNode characterNode) {
+        this.ID = characterNode.get("id").asText();
+        this.name = characterNode.get("name").asText();
+        this.rarity = characterNode.get("rarity").asInt();
+        this.rank = characterNode.get("rank").asInt();
+        this.promotion = characterNode.get("level").asInt();
+        this.iconUrl = Client.getActualURL(characterNode.get("icon").asText());
+        this.path = new Path(characterNode);
+        // TODO: Implement Rank Icons
+        this.element = new Element(characterNode);
+
         throw new UnsupportedOperationException(); // TODO
     }
 }
