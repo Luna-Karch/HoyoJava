@@ -1,5 +1,6 @@
 package HoyoJava.HSR;
 
+import java.util.HashMap;
 import java.util.ArrayList;
 import HoyoJava.Clients.Client;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -103,25 +104,14 @@ public class HSRCharacter {
         private final String iconUrl;
         private final String parent;
 
-        public TreeSkill(String ID, int level, String anchor, 
-        int maxLevel, String iconUrl) {
-            this.ID = ID;
-            this.level = level;
-            this.anchor = anchor;
-            this.maxLevel = maxLevel;
-            this.iconUrl = Client.getActualURL(iconUrl);
-            this.parent = null;
+        public TreeSkill(JsonNode skillTreeNode) {
+            this.ID = skillTreeNode.get("id").asText();
+            this.level = skillTreeNode.get("level").asInt();
+            this.anchor = skillTreeNode.get("anchor").asText();
+            this.maxLevel = skillTreeNode.get("max_level").asInt();
+            this.iconUrl = Client.getActualURL(skillTreeNode.get("icon").asText());
+            this.parent = (skillTreeNode.get("parent") instanceof NullNode) ? (null) : (skillTreeNode.get("parent").asText());
         }
-
-        public TreeSkill(String ID, int level, String anchor, 
-        int maxLevel, String iconUrl, String parent) {
-            this.ID = ID;
-            this.level = level;
-            this.anchor = anchor;
-            this.maxLevel = maxLevel;
-            this.iconUrl = Client.getActualURL(iconUrl);
-            this.parent = parent;
-        } // Alternate constructor for when a parent is present
 
         public String getID() { return this.ID; }
         public int getLevel() { return this.level; }
@@ -132,7 +122,26 @@ public class HSRCharacter {
     }
 
     public class SkillTree {
-        // TODO: Implement a skill tree system
+        private final HashMap<String, TreeSkill> skillTree = new HashMap<>();
+
+        public SkillTree(JsonNode skillTreeData) {
+            for (final JsonNode skillTreeNode: skillTreeData) {
+                String ID = skillTreeNode.get("id").asText();
+                skillTree.put(ID, new TreeSkill(skillTreeNode));
+            }
+        }
+
+        public TreeSkill getSkill (String ID) {
+            return skillTree.get(ID);
+        }
+
+        public TreeSkill getSkillParent(String ID) {
+            TreeSkill currentNode = this.getSkill(ID);
+
+            if (currentNode == null) { return null; }
+
+            return this.getSkill(currentNode.getParent());
+        }
     }
 
     private final String ID;
