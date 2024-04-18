@@ -144,6 +144,34 @@ public class HSRCharacter {
         }
     }
 
+    public class LightCone {
+        // TODO
+    }
+
+    public class Relic {
+        // TODO:
+    }
+
+    public class RelicSet {
+        // TODO:
+    }
+
+    public class Attribute {
+        // TODO:
+    }
+
+    public class Addition {
+        // TODO:
+    }
+
+    public class Property {
+        // TODO:
+    }
+
+    public class Pos {
+        // TODO:
+    }
+
     private final String ID;
     private final String name;
     private final int rarity;
@@ -157,6 +185,7 @@ public class HSRCharacter {
     private final Path path;
     private final Element element;
     private final ArrayList<BaseSkill> skills = new ArrayList<>();
+    private final SkillTree skillTree;
 
     public HSRCharacter(JsonNode characterNode) {
         this.ID = characterNode.get("id").asText();
@@ -176,6 +205,8 @@ public class HSRCharacter {
             this.skills.add(new BaseSkill(skillData));
         }
 
+        this.skillTree = new SkillTree(characterNode.get("skill_trees"));
+
         throw new UnsupportedOperationException(); // TODO
     }
 
@@ -192,4 +223,5 @@ public class HSRCharacter {
     public Path getPath() { return this.path; }
     public Element getElement() { return this.element; }
     public ArrayList<BaseSkill> getSkills() { return this.skills; }
+    public SkillTree getSkillTree() { return this.skillTree; }
 }
