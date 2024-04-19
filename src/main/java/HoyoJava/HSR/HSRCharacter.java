@@ -249,6 +249,7 @@ public class HSRCharacter {
 
     public class Property {
         private final String type;
+        private final String field;
         private final String name;
         private final String icon;
         private final double value;
@@ -257,6 +258,7 @@ public class HSRCharacter {
 
         public Property(JsonNode propertyJsonNode) {
             this.type = propertyJsonNode.get("type").asText();
+            this.field = propertyJsonNode.get("field").asText();
             this.name = propertyJsonNode.get("name").asText();
             this.icon = Client.getActualURL(propertyJsonNode.get("icon").asText());
             this.value = propertyJsonNode.get("value").asDouble();
@@ -266,6 +268,7 @@ public class HSRCharacter {
 
         public String getType() { return this.type; }
         public String getName() { return this.name; }
+        public String getField() { return this.field; }
         public String getIconUrl() { return this.icon; }
         public double getValue() { return this.value; }
         public String getDisplayValue() { return this.display; }
@@ -290,6 +293,16 @@ public class HSRCharacter {
     private final Element element;
     private final ArrayList<BaseSkill> skills = new ArrayList<>();
     private final SkillTree skillTree;
+    private final LightCone lightCone;
+
+    //TODO: Handle Relics
+    //TODO: Handle Relic Sets
+    //TODO: Handle Additions
+
+    private final ArrayList<Attribute> attributes = new ArrayList<>();
+    private final ArrayList<Property> properties = new ArrayList<>();
+
+    //TODO: Handle Pos
 
     public HSRCharacter(JsonNode characterNode) {
         this.ID = characterNode.get("id").asText();
@@ -310,6 +323,15 @@ public class HSRCharacter {
         }
 
         this.skillTree = new SkillTree(characterNode.get("skill_trees"));
+        this.lightCone = new LightCone(characterNode);
+
+        for (final JsonNode attributeNode: characterNode.get("attributes")) {
+            this.attributes.add(new Attribute(attributeNode));
+        }
+
+        for (final JsonNode propertyNode: characterNode.get("properties")) {
+            this.properties.add(new Property(propertyNode));
+        }
 
         throw new UnsupportedOperationException(); // TODO
     }
@@ -328,4 +350,5 @@ public class HSRCharacter {
     public Element getElement() { return this.element; }
     public ArrayList<BaseSkill> getSkills() { return this.skills; }
     public SkillTree getSkillTree() { return this.skillTree; }
+    public LightCone getLightCone() { return this.lightCone; }
 }
