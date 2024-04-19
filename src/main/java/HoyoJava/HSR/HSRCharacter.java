@@ -145,7 +145,64 @@ public class HSRCharacter {
     }
 
     public class LightCone {
-        // TODO
+        private final String ID;
+        private final String name;
+        private final int rank;
+        private final int level;
+        private final int promotion;
+        private final String iconUrl;
+        private final String previewUrl;
+        private final String portraitUrl;
+        private final Path path;
+        private final ArrayList<Attribute> attributes = new ArrayList<>();
+        private final ArrayList<Property> properties = new ArrayList<>();
+        private final boolean nullStatus;
+
+        public LightCone(JsonNode characterNode) {
+            JsonNode lightConeNode = characterNode.get("light_cone");
+
+            if (lightConeNode instanceof NullNode) {
+                /** If no lightcone equipped */
+                this.ID = null;
+                this.name = null;
+                this.rank = 0;
+                this.level = 0;
+                this.promotion = 0;
+                this.iconUrl = null;
+                this.previewUrl = null;
+                this.portraitUrl = null;
+                this.path = null;
+                this.nullStatus = true;
+                return;
+            }
+
+            this.nullStatus = false;
+            this.ID = lightConeNode.get("id").asText();
+            this.name = lightConeNode.get("name").asText();
+            this.rank = lightConeNode.get("rank").asInt();
+            this.level = lightConeNode.get("level").asInt();
+            this.promotion = lightConeNode.get("promotion").asInt();
+            this.iconUrl = Client.getActualURL(lightConeNode.get("icon").asText());
+            this.previewUrl = Client.getActualURL(lightConeNode.get("preview").asText());
+            this.portraitUrl = Client.getActualURL(lightConeNode.get("portrait").asText());
+            this.path = new Path(lightConeNode);
+
+            //TODO: Initialize Attributes
+            //TODO: Initialize Properties
+        }
+
+        public String getID() { return this.ID; }
+        public String getName() { return this.name; }
+        public int getRank() { return this.rank; }
+        public int getLevel() { return this.level; }
+        public int getPromotion() { return this.promotion; }
+        public String getIconUrl() { return this.iconUrl; }
+        public String getPreviewUrl() { return this.previewUrl; }
+        public String getPortraitUrl() { return this.portraitUrl; }
+        public Path getPath() { return this.path; }
+        public ArrayList<Attribute> getAttributes() { return this.attributes; }
+        public ArrayList<Property> getProperties() { return this.properties; }
+        public boolean isNull() { return this.nullStatus; }
     }
 
     public class Relic {
