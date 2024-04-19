@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import HoyoJava.Clients.Client;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
-import com.fasterxml.jackson.databind.annotation.JsonAppend.Attr;
 
 public class HSRCharacter {
     public class Path {
@@ -188,11 +187,13 @@ public class HSRCharacter {
             this.portraitUrl = Client.getActualURL(lightConeNode.get("portrait").asText());
             this.path = new Path(lightConeNode);
 
-            for (JsonNode attributeNode: characterNode.get("attributes")) {
+            for (JsonNode attributeNode: lightConeNode.get("attributes")) {
                 this.attributes.add(new Attribute(attributeNode));
             }
 
-            //TODO: Initialize Properties
+            for (JsonNode propertyNode: lightConeNode.get("properties")) {
+                this.properties.add(new Property(propertyNode));
+            }
         }
 
         public String getID() { return this.ID; }
@@ -247,7 +248,28 @@ public class HSRCharacter {
     }
 
     public class Property {
-        // TODO:
+        private final String type;
+        private final String name;
+        private final String icon;
+        private final double value;
+        private final String display;
+        private final boolean percent;
+
+        public Property(JsonNode propertyJsonNode) {
+            this.type = propertyJsonNode.get("type").asText();
+            this.name = propertyJsonNode.get("name").asText();
+            this.icon = Client.getActualURL(propertyJsonNode.get("icon").asText());
+            this.value = propertyJsonNode.get("value").asDouble();
+            this.display = propertyJsonNode.get("display").asText();
+            this.percent = propertyJsonNode.get("percent").asBoolean();
+        }
+
+        public String getType() { return this.type; }
+        public String getName() { return this.name; }
+        public String getIconUrl() { return this.icon; }
+        public double getValue() { return this.value; }
+        public String getDisplayValue() { return this.display; }
+        public boolean isPercent() { return this.percent; }
     }
 
     public class Pos {
