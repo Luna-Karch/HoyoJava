@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import HoyoJava.Clients.Client;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
+import com.fasterxml.jackson.databind.annotation.JsonAppend.Attr;
 
 public class HSRCharacter {
     public class Path {
@@ -187,7 +188,10 @@ public class HSRCharacter {
             this.portraitUrl = Client.getActualURL(lightConeNode.get("portrait").asText());
             this.path = new Path(lightConeNode);
 
-            //TODO: Initialize Attributes
+            for (JsonNode attributeNode: characterNode.get("attributes")) {
+                this.attributes.add(new Attribute(attributeNode));
+            }
+
             //TODO: Initialize Properties
         }
 
@@ -214,7 +218,28 @@ public class HSRCharacter {
     }
 
     public class Attribute {
-        // TODO:
+        public final String field;
+        public final String name;
+        public final String iconUrl;
+        public final double value;
+        public final String display;
+        public final boolean percent;
+
+        public Attribute(JsonNode attributeNode) {
+            this.field = attributeNode.get("field").asText();
+            this.name = attributeNode.get("name").asText();
+            this.iconUrl = Client.getActualURL(attributeNode.get("icon").asText());
+            this.value = attributeNode.get("value").asDouble();
+            this.display = attributeNode.get("display").asText();
+            this.percent = attributeNode.get("percent").asBoolean();
+        }
+
+        public String getField() { return this.field; }
+        public String getName() { return this.name; }
+        public String getIconUrl() { return this.iconUrl; }
+        public double getValue() { return this.value; }
+        public String getDisplayValue() { return this.display; }
+        public boolean isPercentage() { return this.percent; }
     }
 
     public class Addition {
