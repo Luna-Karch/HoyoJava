@@ -211,7 +211,101 @@ public class HSRCharacter {
     }
 
     public class Relic {
-        // TODO:
+        public class MainAffix {
+            private final String type;
+            private final String field;
+            private final String name;
+            private final String iconUrl;
+            private final double value;
+            private final String display;
+            private final boolean percent;
+
+            public MainAffix(JsonNode relicNode) {
+                JsonNode mainAffixNode = relicNode.get("main_affix");
+
+                this.type = mainAffixNode.get("type").asText();
+                this.name = mainAffixNode.get("name").asText();
+                this.field = mainAffixNode.get("field").asText();
+                this.iconUrl = Client.getActualURL(mainAffixNode.get("set_id").asText());
+                this.value = mainAffixNode.get("value").asDouble();
+                this.display = mainAffixNode.get("display").asText();
+                this.percent = mainAffixNode.get("percent").asBoolean();
+            }
+
+            public String getType() { return this.type; }
+            public String getField() { return this.field; }
+            public String getName() { return this.name; }
+            public String getIconUrl() { return this.iconUrl; }
+            public double getValue() { return this.value; }
+            public String getDisplayValue() { return this.display; }
+            public boolean isPercent() { return this.percent; }
+        }
+
+        public class SubAffix {
+            private final String type;
+            private final String name;
+            private final String iconUrl;
+            private final double value;
+            private final String display;
+            private final boolean percent;
+            private final int count;
+            private final int step;
+            
+            public SubAffix(JsonNode subAffixNode) {
+                this.type = subAffixNode.get("type").asText();
+                this.name = subAffixNode.get("field").asText();
+                this.iconUrl = Client.getActualURL(subAffixNode.get("icon").asText());
+                this.value = subAffixNode.get("value").asDouble();
+                this.display = subAffixNode.get("display").asText();
+                this.percent = subAffixNode.get("percent").asBoolean();
+                this.count = subAffixNode.get("count").asInt();
+                this.step = subAffixNode.get("step").asInt();
+
+            }
+
+            public String getType() { return this.type; }
+            public String getName() { return this.name; }
+            public String getIconUrl() { return this.iconUrl; }
+            public double getValue() { return this.value; }
+            public String getDisplayValue() { return this.display; }
+            public int getCount() { return this.count; }
+            public int getStep() { return this.step; }
+            public boolean isPercent() { return this.percent; }
+        }
+
+        private final String ID;
+        private final String name;
+        private final String setID;
+        private final String setName;
+        private final int rarity;
+        private final int level;
+        private final String iconUrl;
+        private final MainAffix mainAffix;
+        private final ArrayList<SubAffix> subaffixes = new ArrayList<>();
+
+        public Relic(JsonNode relicNode) {
+            this.ID = relicNode.get("id").asText();
+            this.name = relicNode.get("name").asText();
+            this.setID = relicNode.get("set_id").asText();
+            this.setName = relicNode.get("set_name").asText();
+            this.rarity = relicNode.get("rarity").asInt();
+            this.level = relicNode.get("level").asInt();
+            this.iconUrl = Client.getActualURL(relicNode.get("icon").asText());
+            this.mainAffix = new MainAffix(relicNode);
+
+            for (final JsonNode subAffixNode: relicNode.get("sub_affix")) {
+                this.subaffixes.add(new SubAffix(subAffixNode));
+            }
+        }
+
+        public String getID() { return this.ID; }
+        public String getName() { return this.name; }
+        public String getSetID() { return this.setID; }
+        public String getSetName() { return this.setName; }
+        public int getRarity() { return this.rarity; }
+        public int getLevel() { return this.level; }
+        public String getIconUrl() { return this.iconUrl; }
+        public MainAffix getMainAffix() { return this.mainAffix; }
     }
 
     public class RelicSet {
