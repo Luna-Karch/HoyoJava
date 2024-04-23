@@ -219,12 +219,12 @@ public class HSRCharacter {
     }
 
     public class Attribute {
-        public final String field;
-        public final String name;
-        public final String iconUrl;
-        public final double value;
-        public final String display;
-        public final boolean percent;
+        private final String field;
+        private final String name;
+        private final String iconUrl;
+        private final double value;
+        private final String display;
+        private final boolean percent;
 
         public Attribute(JsonNode attributeNode) {
             this.field = attributeNode.get("field").asText();
