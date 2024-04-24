@@ -309,7 +309,31 @@ public class HSRCharacter {
     }
 
     public class RelicSet {
-        // TODO:
+        private final String ID;
+        private final String name;
+        private final String iconUrl;
+        private final int num;
+        private final String description;
+        private final ArrayList<Property> properties = new ArrayList<>();
+
+        public RelicSet(JsonNode relicSetNode) {
+            this.ID = relicSetNode.get("id").asText();
+            this.name = relicSetNode.get("name").asText();
+            this.iconUrl = Client.getActualURL(relicSetNode.get("icon").asText());
+            this.num = relicSetNode.get("num").asInt();
+            this.description = relicSetNode.get("desc").asText();
+            
+            for (final JsonNode propertyNode: relicSetNode.get("properties")) {
+                this.properties.add(new Property(propertyNode));
+            }
+        }
+
+        public String getID() { return this.ID; }
+        public String getName() { return this.name; }
+        public String getIconUrl() { return this.iconUrl; }
+        public int getNum() { return this.num; }
+        public String getDescription() { return this.description; }
+        public ArrayList<Property> getProperties() { return this.properties; }
     }
 
     public class Attribute {
@@ -389,8 +413,8 @@ public class HSRCharacter {
     private final SkillTree skillTree;
     private final LightCone lightCone;
     private final ArrayList<Relic> relics = new ArrayList<>();
+    private final ArrayList<RelicSet> relicSets = new ArrayList<>();
 
-    //TODO: Handle Relic Sets
     //TODO: Handle Additions
 
     private final ArrayList<Attribute> attributes = new ArrayList<>();
@@ -409,27 +433,32 @@ public class HSRCharacter {
         
         for (final JsonNode rankIcon: characterNode.get("rank_icons")) {
             this.rankIcons.add(rankIcon.asText());
-        }
+        } /** Add rank icons */
+
         this.element = new Element(characterNode);
 
         for (final JsonNode skillData: characterNode.get("skills")) {
             this.skills.add(new BaseSkill(skillData));
-        }
+        } /** Add Base Skills */
 
         this.skillTree = new SkillTree(characterNode.get("skill_trees"));
         this.lightCone = new LightCone(characterNode);
 
         for (final JsonNode attributeNode: characterNode.get("attributes")) {
             this.attributes.add(new Attribute(attributeNode));
-        }
+        } /** Add Attributes */
 
         for (final JsonNode propertyNode: characterNode.get("properties")) {
             this.properties.add(new Property(propertyNode));
-        }
+        } /** Add Properties */
 
         for (final JsonNode relicNode: characterNode.get("relics")) {
             this.relics.add(new Relic(relicNode));
-        }
+        } /** Add Relics */
+
+        for (final JsonNode relicSetNode: characterNode.get("relic_sets")) {
+            this.relicSets.add(new RelicSet(relicSetNode));
+        } /** Add Relic Sets */
 
         throw new UnsupportedOperationException(); // TODO
     }
