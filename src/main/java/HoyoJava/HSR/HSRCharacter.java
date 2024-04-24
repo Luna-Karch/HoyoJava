@@ -388,8 +388,8 @@ public class HSRCharacter {
     private final ArrayList<BaseSkill> skills = new ArrayList<>();
     private final SkillTree skillTree;
     private final LightCone lightCone;
+    private final ArrayList<Relic> relics = new ArrayList<>();
 
-    //TODO: Handle Relics
     //TODO: Handle Relic Sets
     //TODO: Handle Additions
 
@@ -425,6 +425,10 @@ public class HSRCharacter {
 
         for (final JsonNode propertyNode: characterNode.get("properties")) {
             this.properties.add(new Property(propertyNode));
+        }
+
+        for (final JsonNode relicNode: characterNode.get("relics")) {
+            this.relics.add(new Relic(relicNode));
         }
 
         throw new UnsupportedOperationException(); // TODO
