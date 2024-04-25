@@ -1,6 +1,10 @@
 package HoyoJava.Clients;
 
+import HoyoJava.HSR.HSRCharacter;
 import HoyoJava.HSR.HSRProfile;
+
+import java.util.ArrayList;
+
 import com.fasterxml.jackson.databind.JsonNode;
 
 /**
@@ -66,6 +70,19 @@ public class Client {
         if (SRC != null) {
             return new HSRProfile(SRC);
         }
+
+        return null;
+    }
+
+    public ArrayList<HSRCharacter> getHSRCharacters() {
+        if (SRC != null) {
+            ArrayList<HSRCharacter> result = new ArrayList<>();
+            for (JsonNode characterNode: this.getCharacters()) {
+                result.add(new HSRCharacter(characterNode));
+            }
+
+            return result;
+        }        
 
         return null;
     }

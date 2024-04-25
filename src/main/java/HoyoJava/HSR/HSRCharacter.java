@@ -226,10 +226,10 @@ public class HSRCharacter {
                 this.type = mainAffixNode.get("type").asText();
                 this.name = mainAffixNode.get("name").asText();
                 this.field = mainAffixNode.get("field").asText();
-                this.iconUrl = Client.getActualURL(mainAffixNode.get("set_id").asText());
                 this.value = mainAffixNode.get("value").asDouble();
                 this.display = mainAffixNode.get("display").asText();
                 this.percent = mainAffixNode.get("percent").asBoolean();
+                this.iconUrl = Client.getActualURL(mainAffixNode.get("icon").asText());
             }
 
             public String getType() { return this.type; }
