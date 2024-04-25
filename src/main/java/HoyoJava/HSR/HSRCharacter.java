@@ -415,7 +415,15 @@ public class HSRCharacter {
     }
 
     public class Pos {
-        // TODO:
+        private final ArrayList<Integer> posList = new ArrayList<>();
+
+        public Pos(JsonNode posNode) {
+            for (final JsonNode posValue: posNode) {
+                this.posList.add(posValue.asInt());
+            }
+        }
+
+        public ArrayList<Integer> getPosList() { return this.posList; }
     }
 
     private final String ID;
@@ -424,10 +432,10 @@ public class HSRCharacter {
     private final int rank;
     private final int level;
     private final int promotion;
-    private String iconUrl;
-    private String previewUrl;
-    private String portraitUrl;
-    private ArrayList<String> rankIcons = new ArrayList<>();
+    private final String iconUrl;
+    private final String previewUrl;
+    private final String portraitUrl;
+    private final ArrayList<String> rankIcons = new ArrayList<>();
     private final Path path;
     private final Element element;
     private final ArrayList<BaseSkill> skills = new ArrayList<>();
@@ -438,8 +446,7 @@ public class HSRCharacter {
     private final ArrayList<Addition> additions = new ArrayList<>();
     private final ArrayList<Attribute> attributes = new ArrayList<>();
     private final ArrayList<Property> properties = new ArrayList<>();
-
-    //TODO: Handle Pos
+    private final Pos pos;  
 
     public HSRCharacter(JsonNode characterNode) {
         this.ID = characterNode.get("id").asText();
@@ -449,6 +456,9 @@ public class HSRCharacter {
         this.promotion = characterNode.get("level").asInt();
         this.iconUrl = Client.getActualURL(characterNode.get("icon").asText());
         this.path = new Path(characterNode);
+        this.level = characterNode.get("level").asInt();
+        this.portraitUrl = Client.getActualURL(characterNode.get("portrait").asText());
+        this.previewUrl = Client.getActualURL(characterNode.get("preview").asText());
         
         for (final JsonNode rankIcon: characterNode.get("rank_icons")) {
             this.rankIcons.add(rankIcon.asText());
@@ -482,8 +492,8 @@ public class HSRCharacter {
         for (final JsonNode additionNode: characterNode.get("additions")) {
             this.additions.add(new Addition(additionNode));
         } /** Add Additions */
-
-        throw new UnsupportedOperationException(); // TODO
+        
+        this.pos = new Pos(characterNode.get("pos"));
     }
 
     public String getID() { return this.ID; }
@@ -506,4 +516,5 @@ public class HSRCharacter {
     public ArrayList<Addition> getAdditions() { return this.additions; }
     public ArrayList<Attribute> getAttributes() { return this.attributes; }
     public ArrayList<Property> getProperties() { return this.properties; }
+    public Pos getPos() { return this.pos; }
 }
