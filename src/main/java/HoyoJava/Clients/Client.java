@@ -18,6 +18,8 @@ public class Client {
     private final String UID;
     private static final String ASSET_URL = "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master";
     private JsonNode SRC;
+    private HSRProfile profile = null;
+    private ArrayList<HSRCharacter> characters = null;
 
     /**
      * @param Original String the original source, ex: "icon/relic/306.png"
@@ -63,24 +65,32 @@ public class Client {
     }
 
     public HSRProfile getHSRProfile() {
-        if (SRC != null) {
-            return new HSRProfile(SRC);
+        if (SRC == null) {
+            return null;
         }
 
-        return null;
+        if (this.profile == null) {
+            this.profile = new HSRProfile(SRC);
+        }
+
+        return this.profile;
     }
 
     public ArrayList<HSRCharacter> getHSRCharacters() {
-        if (SRC != null) {
+        if (SRC == null) {
+            return null;
+        }
+
+        if (this.characters == null) {
             ArrayList<HSRCharacter> result = new ArrayList<>();
             for (JsonNode characterNode: this.SRC.get("characters")) {
                 result.add(new HSRCharacter(characterNode));
             }
 
-            return result;
-        }        
+            this.characters = result;
+        }
 
-        return null;
+        return this.characters;
     }
 
     @Override
