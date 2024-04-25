@@ -15,4 +15,8 @@ public class ClientManager {
     public static boolean contains(Client client) {
         return clients.contains(client);
     }
+
+    public static void removeClient(Client client) {
+        clients.remove(client);
+    }
 }

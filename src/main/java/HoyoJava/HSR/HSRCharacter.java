@@ -362,7 +362,28 @@ public class HSRCharacter {
     }
 
     public class Addition {
-        // TODO:
+        private final String field;
+        private final String name;
+        private final String iconUrl;
+        private final double value;
+        private final String display;
+        private final boolean percent;
+
+        public Addition(JsonNode additionNode) {
+            this.field = additionNode.get("field").asText();
+            this.name = additionNode.get("name").asText();
+            this.iconUrl = Client.getActualURL(additionNode.get("icon").asText());
+            this.value = additionNode.get("value").asDouble();
+            this.display = additionNode.get("display").asText();
+            this.percent = additionNode.get("percent").asBoolean();
+        }
+
+        public String getField() { return this.field; }
+        public String getName() { return this.name; }
+        public String getIconUrl() { return this.iconUrl; }
+        public double getValue() { return this.value; }
+        public String getDisplayValue() { return this.display; }
+        public boolean isPercent() { return this.percent; }
     }
 
     public class Property {
