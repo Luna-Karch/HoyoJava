@@ -517,4 +517,9 @@ public class HSRCharacter {
     public ArrayList<Attribute> getAttributes() { return this.attributes; }
     public ArrayList<Property> getProperties() { return this.properties; }
     public Pos getPos() { return this.pos; }
+    
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }

@@ -62,10 +62,6 @@ public class Client {
         return this.SRC.get("player");
     }
 
-    public JsonNode getCharacters() {
-        return this.SRC.get("characters");
-    }
-
     public HSRProfile getHSRProfile() {
         if (SRC != null) {
             return new HSRProfile(SRC);
@@ -77,7 +73,7 @@ public class Client {
     public ArrayList<HSRCharacter> getHSRCharacters() {
         if (SRC != null) {
             ArrayList<HSRCharacter> result = new ArrayList<>();
-            for (JsonNode characterNode: this.getCharacters()) {
+            for (JsonNode characterNode: this.SRC.get("characters")) {
                 result.add(new HSRCharacter(characterNode));
             }
 
