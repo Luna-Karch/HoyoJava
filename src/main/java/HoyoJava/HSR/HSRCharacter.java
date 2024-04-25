@@ -435,9 +435,7 @@ public class HSRCharacter {
     private final LightCone lightCone;
     private final ArrayList<Relic> relics = new ArrayList<>();
     private final ArrayList<RelicSet> relicSets = new ArrayList<>();
-
-    //TODO: Handle Additions
-
+    private final ArrayList<Addition> additions = new ArrayList<>();
     private final ArrayList<Attribute> attributes = new ArrayList<>();
     private final ArrayList<Property> properties = new ArrayList<>();
 
@@ -481,6 +479,10 @@ public class HSRCharacter {
             this.relicSets.add(new RelicSet(relicSetNode));
         } /** Add Relic Sets */
 
+        for (final JsonNode additionNode: characterNode.get("additions")) {
+            this.additions.add(new Addition(additionNode));
+        } /** Add Additions */
+
         throw new UnsupportedOperationException(); // TODO
     }
 
@@ -499,4 +501,9 @@ public class HSRCharacter {
     public ArrayList<BaseSkill> getSkills() { return this.skills; }
     public SkillTree getSkillTree() { return this.skillTree; }
     public LightCone getLightCone() { return this.lightCone; }
+    public ArrayList<Relic> getRelics() { return this.relics; }
+    public ArrayList<RelicSet> getRelicSets() { return this.relicSets; }
+    public ArrayList<Addition> getAdditions() { return this.additions; }
+    public ArrayList<Attribute> getAttributes() { return this.attributes; }
+    public ArrayList<Property> getProperties() { return this.properties; }
 }
