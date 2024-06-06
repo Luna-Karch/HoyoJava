@@ -246,7 +246,7 @@ public class HSRCharacter {
 
             @Override
             public String toString() {
-                return ""; // TODO: Implement
+                return "+" + this.getDisplayValue() + " " + this.getName(); 
             }
         }
 
