@@ -2,9 +2,11 @@ package HoyoJava.HSR;
 
 import java.util.HashMap;
 import java.util.ArrayList;
-import HoyoJava.Clients.Client;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
+
+import HoyoJava.Clients.Client;
 
 public class HSRCharacter {
     public class Path {
@@ -210,7 +212,9 @@ public class HSRCharacter {
         public boolean isNull() { return this.nullStatus; }
     }
 
-    public class Relic {
+    public class Relic { 
+        //TODO: Relic toString method
+
         public class MainAffix {
             private final String type;
             private final String field;
@@ -239,6 +243,11 @@ public class HSRCharacter {
             public double getValue() { return this.value; }
             public String getDisplayValue() { return this.display; }
             public boolean isPercent() { return this.percent; }
+
+            @Override
+            public String toString() {
+                return ""; // TODO: Implement
+            }
         }
 
         public class SubAffix {
@@ -260,7 +269,6 @@ public class HSRCharacter {
                 this.percent = subAffixNode.get("percent").asBoolean();
                 this.count = subAffixNode.get("count").asInt();
                 this.step = subAffixNode.get("step").asInt();
-
             }
 
             public String getType() { return this.type; }
@@ -271,6 +279,13 @@ public class HSRCharacter {
             public int getCount() { return this.count; }
             public int getStep() { return this.step; }
             public boolean isPercent() { return this.percent; }
+
+            @Override
+            public String toString() {
+                return "+" + this.getDisplayValue() + 
+                " " + this.getName().toUpperCase().replace("_", " ") 
+                + " (" + this.getCount() + ")";
+            }
         }
 
         private final String ID;
@@ -306,6 +321,7 @@ public class HSRCharacter {
         public int getLevel() { return this.level; }
         public String getIconUrl() { return this.iconUrl; }
         public MainAffix getMainAffix() { return this.mainAffix; }
+        public ArrayList<SubAffix> getSubAffixes() { return this.subaffixes; }
     }
 
     public class RelicSet {
