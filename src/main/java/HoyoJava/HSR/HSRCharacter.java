@@ -2,11 +2,9 @@ package HoyoJava.HSR;
 
 import java.util.HashMap;
 import java.util.ArrayList;
-
+import HoyoJava.Clients.Client;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
-
-import HoyoJava.Clients.Client;
 
 public class HSRCharacter {
     public class Path {
@@ -213,8 +211,6 @@ public class HSRCharacter {
     }
 
     public class Relic { 
-        //TODO: Relic toString method
-
         public class MainAffix {
             private final String type;
             private final String field;
@@ -322,6 +318,29 @@ public class HSRCharacter {
         public String getIconUrl() { return this.iconUrl; }
         public MainAffix getMainAffix() { return this.mainAffix; }
         public ArrayList<SubAffix> getSubAffixes() { return this.subaffixes; }
+
+        @Override
+        public String toString() {
+            String result = this.getRarity() + "★ " + this.getName() + " [" + this.getSetName() + "]\n";
+            result += "Level: " + this.getLevel() + "\n";
+            result += "Main Stat: " + this.getMainAffix() + "\n";
+            result += "Sub Stats: \n";
+
+            int subLength = this.getSubAffixes().size();
+            int subaffixCounter = 0;
+
+            for (SubAffix subaffix : this.getSubAffixes()) {
+                if (subaffixCounter == subLength - 1) {
+                    result += "\t" + subaffix;
+                    break;
+                }
+
+                result += "\t" + subaffix + "\n";
+                subaffixCounter++;
+            }
+
+            return result; 
+        }
     }
 
     public class RelicSet {
