@@ -83,6 +83,6 @@ public class EntranceView extends GridPane {
     }
 
     public void changeStage(MainView mainView) {
-        ((Stage)this.getScene().getWindow()).setScene(new Scene(mainView, 600, 500));
+        ((Stage)this.getScene().getWindow()).setScene(new Scene(mainView, 1200, 800));
     }
 }
