@@ -10,10 +10,12 @@ public class ClientTask extends Task<Client> {
 
     private Label output;
     private String input;
+    private EntranceView entranceView;
 
-    public ClientTask(String input, Label output) {
+    public ClientTask(String input, Label output, EntranceView entranceView) {
         this.input = input;
         this.output = output;
+        this.entranceView = entranceView;
     }
 
     @Override
@@ -40,6 +42,9 @@ public class ClientTask extends Task<Client> {
         Platform.runLater(() -> {
             output.setText("Success.");
             output.setTextFill(Color.WHITE);
+
+            MainView mainView = new MainView(getValue());
+            this.entranceView.changeStage(mainView);
         });
     }
 }

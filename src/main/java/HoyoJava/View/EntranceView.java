@@ -1,5 +1,7 @@
 package HoyoJava.View;
 
+import javafx.stage.Stage;
+import javafx.scene.Scene;
 import javafx.geometry.Pos;
 import javafx.scene.paint.Color;
 import javafx.scene.control.Label;
@@ -38,7 +40,7 @@ public class EntranceView extends GridPane {
             output.setTextFill(Color.WHITE);
         });
 
-        ClientTask clientTask = new ClientTask(input, output);
+        ClientTask clientTask = new ClientTask(input, output, this);
 
         new Thread(clientTask).start();
     }
@@ -78,5 +80,9 @@ public class EntranceView extends GridPane {
         super.add(inputID, 0, 1);
         super.add(inputButton, 0, 2);
         super.add(checkLabel, 0, 3);
+    }
+
+    public void changeStage(MainView mainView) {
+        ((Stage)this.getScene().getWindow()).setScene(new Scene(mainView, 600, 500));
     }
 }
