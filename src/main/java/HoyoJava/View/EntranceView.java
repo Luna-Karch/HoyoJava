@@ -4,13 +4,12 @@ import javafx.geometry.Pos;
 import javafx.scene.paint.Color;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
+import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.TextField;
 
 public class EntranceView extends GridPane {
-    private MainView mainView = new MainView();
-
     private boolean sanitziedInput(String input) {
         if (input.length() == 0) {
             return false;
@@ -31,12 +30,17 @@ public class EntranceView extends GridPane {
         if (!sanitziedInput(input)) {
             output.setText("That is not your UID.");
             output.setTextFill(Color.RED);
-        } else {
+            return;
+        }
+        
+        Platform.runLater(() -> {
             output.setText("Attempting to fetch data...");
             output.setTextFill(Color.WHITE);
+        });
 
-            // Send Data to MainView
-        }
+        ClientTask clientTask = new ClientTask(input, output);
+
+        new Thread(clientTask).start();
     }
 
     public EntranceView() {
@@ -75,6 +79,4 @@ public class EntranceView extends GridPane {
         super.add(inputButton, 0, 2);
         super.add(checkLabel, 0, 3);
     }
-
-    public MainView getMainView() { return this.mainView; }
 }

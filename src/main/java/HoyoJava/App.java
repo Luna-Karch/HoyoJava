@@ -2,7 +2,6 @@ package HoyoJava;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import HoyoJava.View.MainView;
 import HoyoJava.View.EntranceView;
 import javafx.application.Application;
 
@@ -22,10 +21,8 @@ public class App extends Application {
         stage.setResizable(false);
 
         EntranceView entranceScreen = new EntranceView();
-        MainView mainScreen = entranceScreen.getMainView();
-        // TODO: Implement swapping to main screen
 
         stage.setScene(new Scene(entranceScreen, 188, 150));
         stage.show();
     }
-}
+} // 613792348
