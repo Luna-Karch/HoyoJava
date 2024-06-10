@@ -1,7 +1,7 @@
 package HoyoJava.Clients;
 
-import HoyoJava.HSR.HSRCharacter;
 import HoyoJava.HSR.HSRProfile;
+import HoyoJava.HSR.HSRCharacter;
 
 import java.util.ArrayList;
 
@@ -43,21 +43,8 @@ public class Client {
 
     public String getUID() { return this.UID; }
 
-    /**
-     * Attempts to reconnect to the API
-     */
-    public void attemptReconnect() {
-        try {
-            this.SRC = ClientManager.API.getDefault(this.UID);
-            
-            if (!ClientManager.contains(this)) {
-                ClientManager.add(this);
-            }
-
-        } catch (Exception e) {
-            this.SRC = null;
-            System.out.println("Failed to connect to MihomoAPI...");
-        }
+    public boolean hasNullSource() {
+        return this.SRC == null; // True if source is null, false otherwise
     }
 
     public JsonNode getPlayer() {

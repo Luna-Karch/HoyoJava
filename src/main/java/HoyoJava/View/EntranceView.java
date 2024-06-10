@@ -8,7 +8,9 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.TextField;
 
-public class Entrance extends GridPane {
+public class EntranceView extends GridPane {
+    private MainView mainView = new MainView();
+
     private boolean sanitziedInput(String input) {
         if (input.length() == 0) {
             return false;
@@ -32,10 +34,12 @@ public class Entrance extends GridPane {
         } else {
             output.setText("Attempting to fetch data...");
             output.setTextFill(Color.WHITE);
+
+            // Send Data to MainView
         }
     }
 
-    public Entrance() {
+    public EntranceView() {
         super();
 
         super.setStyle("-fx-background-color: #474747");
@@ -71,4 +75,6 @@ public class Entrance extends GridPane {
         super.add(inputButton, 0, 2);
         super.add(checkLabel, 0, 3);
     }
+
+    public MainView getMainView() { return this.mainView; }
 }
